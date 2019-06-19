@@ -1,29 +1,48 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view :gotoTracks="gotoTracks" :gotoArtists="gotoArtists"/>
   </div>
 </template>
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      artistId: null,
+      position: null
+    }
+  },
+  created () {
+    this.$root.$on('gotoTracks', (id, position) =>
+      this.gotoTracks(id, position)
+    )
+    this.$root.$on('gotoArtists', () => this.gotoArtists())
+  },
+  methods: {
+    gotoTracks (id, position) {
+      this.artistId = id
+      this.position = position
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+      this.$router.push({
+        name: 'tracks',
+        params: {
+          id: id,
+          position: position
+        }
+      })
+    },
+    gotoArtists () {
+      this.$router.push({
+        name: 'artists',
+        params: {
+          id: this.artistId,
+          position: this.position
+        }
+      })
     }
   }
 }
+</script>
+
+<style lang="scss">
 </style>
