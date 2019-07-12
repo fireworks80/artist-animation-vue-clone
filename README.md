@@ -1,5 +1,7 @@
 # artist-animation-clone
 
+![screenshot](./vue-artist-clone.gif)
+
 ## Project setup
 ```
 npm install
